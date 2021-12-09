@@ -3022,12 +3022,10 @@ a copy of the local keymap, and sets `header-line-format'."
   "Download and show images in messages, avatars, etc."
   :type 'boolean
   :set (lambda (option value)
-         (if (or (fboundp 'imagemagick-types)
-                 (when (fboundp 'image-transforms-p)
-                   (image-transforms-p)))
+         (if (image-transforms-p)
              (set-default option value)
            (set-default option nil)
-           (when value
+           (unless value
              (display-warning 'ement "This Emacs was not built with ImageMagick support, nor does it support Cairo/XRender scaling, so images can't be displayed in Ement")))))
 
 (defcustom ement-room-image-initial-height 0.2
